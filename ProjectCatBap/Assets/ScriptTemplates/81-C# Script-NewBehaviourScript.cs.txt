@@ -4,15 +4,18 @@ using UnityEngine;
 
 namespace ATE
 {
-	public class #SCRIPTNAME# : MonoBehaviour {
+	public class #SCRIPTNAME# : MonoBehaviour
+	{
 
 		// Use this for initialization
-		void Start () {
+		void Start ()
+		{
 			#NOTRIM#
 		}
 		
 		// Update is called once per frame
-		void Update () {
+		void Update ()
+		{
 			#NOTRIM#
 		}
 		
