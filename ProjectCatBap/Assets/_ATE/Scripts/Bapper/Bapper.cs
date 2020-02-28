@@ -28,21 +28,32 @@ namespace ATE
     // Arm can become re-activated before fully reset
 	public class Bapper : MonoBehaviour
     {
-        public GameObject arm = null;
-        public GameObject paw = null;
+        //public GameObject arm = null;
+        //public GameObject paw = null;
 
+        public Rigidbody2D armRigidbody = null;
+        public Rigidbody2D pawRigidbody = null;
 
-        // Use this for initialization
-        void Start()
+        public float moveToSpeed = 1;
+        
+
+        private void FixedUpdate()
+        {
+            if (Input.GetMouseButtonDown (0))
+                BapTowardMouse ();
+            else
+                ResetBapper ();
+        }
+
+        private void BapTowardMouse()
         {
 
         }
-		
-		// Update is called once per frame
-		void Update ()
-        {
-			
-		}
 
-	}
+        private void ResetBapper()
+        {
+
+        }
+
+    }
 }
