@@ -28,31 +28,50 @@ namespace ATE
     // Arm can become re-activated before fully reset
 	public class Bapper : MonoBehaviour
     {
-        //public GameObject arm = null;
-        //public GameObject paw = null;
-
         public Rigidbody2D armRigidbody = null;
         public Rigidbody2D pawRigidbody = null;
 
-        public float moveToSpeed = 1;
-        
+        public float speedMoveToPosition = 1;
+        public float speedMoveToStartPos = 1;
+
+        private Vector2 startPos;
+        private Quaternion startRot;
+
+
+        private void Awake()
+        {
+            startPos = transform.position;
+            startRot = transform.rotation;
+        }
 
         private void FixedUpdate()
         {
-            if (Input.GetMouseButtonDown (0))
-                BapTowardMouse ();
+            if (Input.GetMouseButton (0))
+                BapTowardMouse (speedMoveToPosition);
+            //else if (Input.GetMouseButton (1))
             else
-                ResetBapper ();
+                ResetBapper (speedMoveToStartPos);
         }
 
-        private void BapTowardMouse()
+        private void BapTowardMouse(float moveSpeed)
         {
+            //TODO: Should go to offset location that is placed near paw/wrist
+            //TODO: Duplicate in ResetBapper()
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+            Vector2 moveDir = (mousePos - (Vector2)transform.position).normalized;
+            float mouseDist = Vector2.Distance (mousePos, (Vector2)transform.position);
 
+            transform.position += (Vector3)moveDir * Mathf.Min (moveSpeed, mouseDist);
         }
 
-        private void ResetBapper()
+        private void ResetBapper(float moveSpeed)
         {
+            //TODO: Should go to offset location that is placed near paw/wrist
+            //TODO: Duplicate in BapTowardMouse()
+            Vector2 moveDir = (startPos - (Vector2)transform.position).normalized;
+            float mouseDist = Vector2.Distance ((Vector2)transform.position, startPos);
 
+            transform.position += (Vector3)moveDir * Mathf.Min (moveSpeed, mouseDist);
         }
 
     }
