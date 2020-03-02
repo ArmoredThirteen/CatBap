@@ -557,10 +557,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faceToObject: {fileID: 256300752}
-  armRigidbody: {fileID: 1173817144}
-  pawRigidbody: {fileID: 0}
-  speedMoveToPosition: 0.5
-  speedMoveToStartPos: 0.25
+  armToMove: {fileID: 1567512464}
+  maxReachDistance: 5
+  speedMoveToPosition: 5
+  speedMoveToStartPos: 10
   speedRotateFaceMouse: 1
   speedRotateToStartRot: 1
 --- !u!4 &1173817143
@@ -571,7 +571,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173817141}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.02, y: -2.33, z: 0}
+  m_LocalPosition: {x: 4.59, y: -5.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1567512464}

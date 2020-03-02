@@ -30,14 +30,16 @@ namespace ATE
     {
         public Transform faceToObject = null;
 
-        public Rigidbody2D armRigidbody = null;
-        public Rigidbody2D pawRigidbody = null;
+        public Transform armToMove = null;
+
+        public float maxReachDistance = 5;
 
         public float speedMoveToPosition = 1;
         public float speedMoveToStartPos = 1;
 
         public float speedRotateFaceMouse = 1;
         public float speedRotateToStartRot = 1;
+
 
         private Vector2 startPos;
         private Quaternion startRot;
@@ -52,43 +54,34 @@ namespace ATE
         private void FixedUpdate()
         {
             if (Input.GetMouseButton (0))
-                BapTowardMouse (speedMoveToPosition, speedRotateFaceMouse);
+                BapTowardMouse (speedMoveToPosition * Time.deltaTime, speedRotateFaceMouse * Time.deltaTime);
             //else if (Input.GetMouseButton (1))
             else
-                ResetBapper (speedMoveToStartPos, speedRotateToStartRot);
-        }
+                ResetBapper (speedMoveToStartPos * Time.deltaTime, speedRotateToStartRot * Time.deltaTime);
 
-        private void BapTowardMouse(float moveSpeed, float rotateSpeed)
-        {
-            moveSpeed *= Time.deltaTime;
-            rotateSpeed *= Time.deltaTime;
-
-            //TODO: Should go to offset location that is placed near paw/wrist
-            //TODO: Duplicate in ResetBapper()
-            /*Vector2 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-            Vector2 moveDir = (mousePos - (Vector2)transform.position).normalized;
-            float mouseDist = Vector2.Distance (mousePos, (Vector2)transform.position);
-            transform.position += (Vector3)moveDir * Mathf.Min (moveSpeed, mouseDist);*/
-
-            /*targetRotation = Quaternion.LookRotation (target.position - transform.position);
-            str = Mathf.Min (strength * Time.deltaTime, 1);
-            transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);*/
-            /*Quaternion targetRot = Quaternion.LookRotation (mousePos - (Vector2)transform.position);
-            float rotStr = Mathf.Min (rotateSpeed, 1);
-            transform.rotation = Quaternion.Lerp (transform.rotation, targetRot, rotStr);*/
-
-            //Vector2 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+            // Rotate to face smooth mouse
             Vector2 rotDir = ((Vector2)faceToObject.position - (Vector2)transform.position).normalized;
             transform.up = rotDir;
         }
 
+        private void BapTowardMouse(float moveSpeed, float rotateSpeed)
+        {
+            if (Vector3.Distance (armToMove.position, startPos) >= maxReachDistance)
+                return;
+
+            // Move forward
+            float moveActual = Mathf.Min (moveSpeed, maxReachDistance - Vector3.Distance (armToMove.position, startPos));
+            armToMove.localPosition += Vector3.up * moveActual;
+        }
+
         private void ResetBapper(float moveSpeed, float rotateSpeed)
         {
-            //TODO: Should go to offset location that is placed near paw/wrist
-            //TODO: Duplicate in BapTowardMouse()
-            Vector2 moveDir = (startPos - (Vector2)transform.position).normalized;
-            float mouseDist = Vector2.Distance ((Vector2)transform.position, startPos);
-            transform.position += (Vector3)moveDir * Mathf.Min (moveSpeed, mouseDist);
+            if (Vector3.Distance (armToMove.position, startPos) <= 0.05)
+                return;
+
+            // Move back to starting position
+            float moveActual = Mathf.Min (moveSpeed, Vector3.Distance (armToMove.position, startPos));
+            armToMove.localPosition += Vector3.down * moveActual;
         }
 
     }
