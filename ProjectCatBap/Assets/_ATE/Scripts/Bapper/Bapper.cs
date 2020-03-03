@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using ATE.SimpleHelpers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,12 +20,17 @@ namespace ATE.Bapper
 
         public float maxReach = 5;
         public float maxClickTime = 1;
+        public float resetTime = 1;
 
         public AnimationCurve reachTimeByDistanceFromStart = new AnimationCurve (new Keyframe (0, 0), new Keyframe (1, 1));
 
 
         private Vector2 startPos;
 
+        private Vector2 startPosSnapshot;
+        private Vector2 targetPosSnapshot;
+
+        private bool isMovingForward = false;
         private float timeClicked = 0;
 
 
@@ -41,20 +47,50 @@ namespace ATE.Bapper
 
         private void FixedUpdate()
         {
+            // Set timeClicked
+            // The smooth follow mouse object gets toggled on/off
+            //  This prevents stutter when double-clicking and moving mouse rapidly
+            if (IsActive && Input.GetMouseButton (0))
+            {
+                timeClicked = Mathf.Min (maxClickTime, timeClicked + Time.deltaTime);
+                mouseObject.gameObject.SetActive (true);
+            }
+            else
+            {
+                timeClicked = Mathf.Max (0, timeClicked - Time.deltaTime);
+                mouseObject.gameObject.SetActive (timeClicked <= 0);
+            }
+
             // Rotate to face smooth mouse
             transform.up = (Vector2)mouseObject.position - startPos;
 
-            //TODO: Currently when mouse is close to startPos, then mouse is released and moved away from arm, the arm jumps forward
-            //      Could maybe fix by having max time get lowered based on ratio of dist/maxDist
-            //      Or make it so returning to starting position has a fixed reset solution instead of using timeClicked curve
+            // When at rest, no need to do anything fancy for movement
+            if (timeClicked <= 0)
+            {
+                armToMove.localPosition = Vector3.zero;
+                return;
+            }
 
-            if (IsActive && Input.GetMouseButton (0))
-                timeClicked = Mathf.Min (maxClickTime, timeClicked + Time.deltaTime);
-            else
-                timeClicked = Mathf.Max (0, timeClicked - Time.deltaTime);
-
+            // Find distance of target object and determine how far along that distance to be based on time clicked
             float targetDistance = Mathf.Min (maxReach, Vector2.Distance (startPos, mouseObject.position));
-            float distanceFromTime = maxReach * reachTimeByDistanceFromStart.Evaluate (timeClicked / maxClickTime);
+            float distanceFromTime = targetDistance * reachTimeByDistanceFromStart.Evaluate (timeClicked / maxClickTime);
+
+            // Move arm toward target
+            armToMove.localPosition = Vector3.up * Mathf.Min (targetDistance, distanceFromTime);
+        }
+
+        private void BapForward()
+        {
+            float targetDistance = Mathf.Min (maxReach, Vector2.Distance (startPos, mouseObject.position));
+            float distanceFromTime = targetDistance * reachTimeByDistanceFromStart.Evaluate (timeClicked / maxClickTime);
+
+            armToMove.localPosition = Vector3.up * Mathf.Min (targetDistance, distanceFromTime);
+        }
+
+        private void BapReset()
+        {
+            float targetDistance = Mathf.Min (maxReach, Vector2.Distance (startPos, mouseObject.position));
+            float distanceFromTime = targetDistance * reachTimeByDistanceFromStart.Evaluate (timeClicked / maxClickTime);
 
             armToMove.localPosition = Vector3.up * Mathf.Min (targetDistance, distanceFromTime);
         }

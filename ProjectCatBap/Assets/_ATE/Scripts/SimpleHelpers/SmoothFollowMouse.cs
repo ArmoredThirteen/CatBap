@@ -11,8 +11,22 @@ namespace ATE.SimpleHelpers
         public AnimationCurve distanceBySpeed = new AnimationCurve (new Keyframe (0, 1), new Keyframe (1, 1));
 
 
+        public bool IsActive
+        {
+            get; set;
+        }
+
+
+        private void Awake()
+        {
+            IsActive = true;
+        }
+
         private void LateUpdate()
         {
+            if (!IsActive)
+                return;
+
             Vector2 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
             Vector2 moveDir = (mousePos - (Vector2)transform.position).normalized;
 
