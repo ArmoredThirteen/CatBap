@@ -14,18 +14,18 @@ namespace ATE.Bapper
     // Arm can become re-activated before fully reset
 	public class Bapper : MonoBehaviour
     {
-        public Transform faceToObject = null;
+        public Transform mouseObject = null;
         public Transform armToMove = null;
 
-        public float maxReachDistance = 5;
+        public float maxReach = 5;
+        public float maxClickTime = 1;
 
-        public float speedMoveToPosition = 1;
-        public float speedMoveToStartPos = 1;
-
-        public float speedRotateFaceMouse = 1;
+        public AnimationCurve reachTimeByDistanceFromStart = new AnimationCurve (new Keyframe (0, 0), new Keyframe (1, 1));
 
 
         private Vector2 startPos;
+
+        private float timeClicked = 0;
 
 
         public bool IsActive
@@ -41,36 +41,22 @@ namespace ATE.Bapper
 
         private void FixedUpdate()
         {
-            if (IsActive && Input.GetMouseButton (0))
-                BapTowardMouse (speedMoveToPosition * Time.deltaTime, speedRotateFaceMouse * Time.deltaTime);
-            //else if (Input.GetMouseButton (1))
-            else
-                ResetBapper (speedMoveToStartPos * Time.deltaTime);
-
             // Rotate to face smooth mouse
-            Vector2 rotDir = ((Vector2)faceToObject.position - (Vector2)transform.position).normalized;
-            transform.up = rotDir;
-        }
+            transform.up = (Vector2)mouseObject.position - startPos;
 
-        private void BapTowardMouse(float moveSpeed, float rotateSpeed)
-        {
-            if (Vector3.Distance (armToMove.position, startPos) >= maxReachDistance)
-                return;
+            //TODO: Currently when mouse is close to startPos, then mouse is released and moved away from arm, the arm jumps forward
+            //      Could maybe fix by having max time get lowered based on ratio of dist/maxDist
+            //      Or make it so returning to starting position has a fixed reset solution instead of using timeClicked curve
 
-            // Move forward
-            float moveActual = Mathf.Min (moveSpeed, maxReachDistance - Vector3.Distance (armToMove.position, startPos));
-            armToMove.localPosition += Vector3.up * moveActual;
-        }
+            if (IsActive && Input.GetMouseButton (0))
+                timeClicked = Mathf.Min (maxClickTime, timeClicked + Time.deltaTime);
+            else
+                timeClicked = Mathf.Max (0, timeClicked - Time.deltaTime);
 
-        private void ResetBapper(float moveSpeed)
-        {
-            if (Vector3.Distance (armToMove.position, startPos) <= 0.05)
-                return;
+            float targetDistance = Mathf.Min (maxReach, Vector2.Distance (startPos, mouseObject.position));
+            float distanceFromTime = maxReach * reachTimeByDistanceFromStart.Evaluate (timeClicked / maxClickTime);
 
-            //TODO: Can get pushed too far and then quickly and automatically drifts away from startPos
-            // Move back to starting position
-            float moveActual = Mathf.Min (moveSpeed, Vector3.Distance (armToMove.position, startPos));
-            armToMove.localPosition += Vector3.down * moveActual;
+            armToMove.localPosition = Vector3.up * Mathf.Min (targetDistance, distanceFromTime);
         }
 
     }

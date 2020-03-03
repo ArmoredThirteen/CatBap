@@ -477,13 +477,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609c016615478e54da6e5abf14358f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faceToObject: {fileID: 256300752}
+  mouseObject: {fileID: 256300752}
   armToMove: {fileID: 962305973}
-  maxReachDistance: 5
-  speedMoveToPosition: 5
-  speedMoveToStartPos: 10
-  speedRotateFaceMouse: 1
-  speedRotateToStartRot: 1
+  maxReach: 5
+  maxClickTime: 1
+  reachTimeByDistanceFromStart:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &675490298
 Transform:
   m_ObjectHideFlags: 0
@@ -698,7 +719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1003911818
 Transform:
   m_ObjectHideFlags: 0
@@ -791,13 +812,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609c016615478e54da6e5abf14358f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faceToObject: {fileID: 256300752}
+  mouseObject: {fileID: 256300752}
   armToMove: {fileID: 1567512464}
-  maxReachDistance: 5
-  speedMoveToPosition: 5
-  speedMoveToStartPos: 10
-  speedRotateFaceMouse: 1
-  speedRotateToStartRot: 1
+  maxReach: 5
+  maxClickTime: 1
+  reachTimeByDistanceFromStart:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &1173817143
 Transform:
   m_ObjectHideFlags: 0
