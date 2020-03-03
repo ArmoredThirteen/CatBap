@@ -15,23 +15,27 @@ namespace ATE.Bapper
     // Arm can become re-activated before fully reset
 	public class Bapper : MonoBehaviour
     {
-        public Transform mouseObject = null;
-        public Transform armToMove = null;
+        // Target to face toward
+        public Transform followObj = null;
+        // Object to rotate to look at followObj
+        public Transform rootObj = null;
+        // Object to move forward while click is held
+        public Transform armObj = null;
+        // Object to rotate erratically while bap is active
+        public Transform wristObj = null;
 
         public float maxReach = 5;
-        public float maxClickTime = 1;
-        public float resetTime = 1;
+        public float timeToMaxReach = 1;
 
-        public AnimationCurve reachTimeByDistanceFromStart = new AnimationCurve (new Keyframe (0, 0), new Keyframe (1, 1));
+        public AnimationCurve clickTimeByDistanceFromStart = new AnimationCurve (new Keyframe (0, 0), new Keyframe (1, 1));
 
 
-        private Vector2 startPos;
-
-        private Vector2 startPosSnapshot;
-        private Vector2 targetPosSnapshot;
-
-        private bool isMovingForward = false;
         private float timeClicked = 0;
+        private float timeFullExtended = 0;
+
+        private float wristTargetRot = 0;
+        private float wristRotSpeed = 0;
+        private float timerCurrWristBap = 0;
 
 
         public bool IsActive
@@ -40,59 +44,74 @@ namespace ATE.Bapper
         }
 
 
-        private void Awake()
-        {
-            startPos = transform.position;
-        }
-
         private void FixedUpdate()
         {
-            // Set timeClicked
-            // The smooth follow mouse object gets toggled on/off
-            //  This prevents stutter when double-clicking and moving mouse rapidly
             if (IsActive && Input.GetMouseButton (0))
-            {
-                timeClicked = Mathf.Min (maxClickTime, timeClicked + Time.deltaTime);
-                mouseObject.gameObject.SetActive (true);
-            }
+                ActiveBapping ();
             else
-            {
-                timeClicked = Mathf.Max (0, timeClicked - Time.deltaTime);
-                mouseObject.gameObject.SetActive (timeClicked <= 0);
-            }
+                ResettingBapper ();
 
-            // Rotate to face smooth mouse
-            transform.up = (Vector2)mouseObject.position - startPos;
+            RotateRootToFollow ();
+            MoveArmAlongCurve ();
+            BapWrist ();
+        }
 
+
+        private void ActiveBapping()
+        {
+            timeClicked = Mathf.Min (timeToMaxReach, timeClicked + Time.deltaTime);
+            if (timeClicked >= timeToMaxReach)
+                timeFullExtended += Time.deltaTime;
+
+            followObj.gameObject.SetActive (true);
+        }
+
+        private void ResettingBapper()
+        {
+            timeClicked = Mathf.Max (0, timeClicked - Time.deltaTime);
+            timeFullExtended = 0;
+
+            followObj.gameObject.SetActive (timeClicked <= 0);
+        }
+
+        private void RotateRootToFollow()
+        {
+            // Directly face smooth mouse
+            rootObj.up = (Vector2)followObj.position - (Vector2)rootObj.position;
+        }
+
+        private void MoveArmAlongCurve()
+        {
             // When at rest, no need to do anything fancy for movement
             if (timeClicked <= 0)
             {
-                armToMove.localPosition = Vector3.zero;
+                armObj.localPosition = Vector3.zero;
                 return;
             }
 
             // Find distance of target object and determine how far along that distance to be based on time clicked
-            float targetDistance = Mathf.Min (maxReach, Vector2.Distance (startPos, mouseObject.position));
-            float distanceFromTime = targetDistance * reachTimeByDistanceFromStart.Evaluate (timeClicked / maxClickTime);
+            float targetDistance = Mathf.Min (maxReach, Vector2.Distance (rootObj.position, followObj.position));
+            float distanceFromTime = targetDistance * clickTimeByDistanceFromStart.Evaluate (timeClicked / timeToMaxReach);
 
             // Move arm toward target
-            armToMove.localPosition = Vector3.up * Mathf.Min (targetDistance, distanceFromTime);
+            armObj.localPosition = Vector3.up * Mathf.Min (targetDistance, distanceFromTime);
         }
 
-        private void BapForward()
+        private void BapWrist()
         {
-            float targetDistance = Mathf.Min (maxReach, Vector2.Distance (startPos, mouseObject.position));
-            float distanceFromTime = targetDistance * reachTimeByDistanceFromStart.Evaluate (timeClicked / maxClickTime);
+            if (timeFullExtended <= 0)
+                return;
 
-            armToMove.localPosition = Vector3.up * Mathf.Min (targetDistance, distanceFromTime);
-        }
+            timerCurrWristBap -= Time.deltaTime;
+            if (timerCurrWristBap <= 0)
+            {
+                //TODO: Hard-coding
+                wristTargetRot = (Random.value * 135) - 20;
+                wristRotSpeed = (Random.value * 5) + 5;
+                timerCurrWristBap = Random.value / 2;
+            }
 
-        private void BapReset()
-        {
-            float targetDistance = Mathf.Min (maxReach, Vector2.Distance (startPos, mouseObject.position));
-            float distanceFromTime = targetDistance * reachTimeByDistanceFromStart.Evaluate (timeClicked / maxClickTime);
-
-            armToMove.localPosition = Vector3.up * Mathf.Min (targetDistance, distanceFromTime);
+            wristObj.rotation = Quaternion.Lerp (wristObj.rotation, Quaternion.Euler (0, 0, wristTargetRot), Time.deltaTime * wristRotSpeed);
         }
 
     }

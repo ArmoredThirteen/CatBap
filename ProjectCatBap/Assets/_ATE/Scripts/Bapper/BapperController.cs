@@ -12,7 +12,7 @@ namespace ATE.Bapper
         
         public void Start()
         {
-            ActivateRight ();
+            ActivateLeft ();
         }
 
         public void Update()
