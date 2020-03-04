@@ -24,6 +24,9 @@ namespace ATE.Bapper
         // Object to rotate erratically while bap is active
         public Transform wristObj = null;
 
+        // When arm is extended, used to apply force
+        public PawCollision pawCollision = null;
+
         public float maxReach = 5;
         public float timeToMaxReach = 1;
 
@@ -111,6 +114,7 @@ namespace ATE.Bapper
             if (timeFullExtended <= 0)
             {
                 wristObj.localRotation = Quaternion.Lerp (wristObj.localRotation, Quaternion.identity, Time.deltaTime * currWristSpeed);
+                pawCollision.bapForce = 0;
                 return;
             }
 
@@ -120,6 +124,7 @@ namespace ATE.Bapper
                 currWristAngle = Random.Range (minWristAngle, maxWristAngle);
                 currWristSpeed = Random.Range (minWristSpeed, maxWristSpeed);
                 currBapTimer =   Random.Range (minBapTime,    maxBapTime);
+                pawCollision.bapForce = currWristSpeed * 10;
             }
 
             wristObj.localRotation = Quaternion.Lerp (wristObj.localRotation, Quaternion.Euler (0, 0, currWristAngle), Time.deltaTime * currWristSpeed);
