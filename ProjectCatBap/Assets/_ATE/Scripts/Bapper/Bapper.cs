@@ -28,14 +28,23 @@ namespace ATE.Bapper
         public float timeToMaxReach = 1;
 
         public AnimationCurve clickTimeByDistanceFromStart = new AnimationCurve (new Keyframe (0, 0), new Keyframe (1, 1));
+        
+        public float minWristAngle = -20;
+        public float maxWristAngle = 135;
 
+        public float minWristSpeed = 5;
+        public float maxWristSpeed = 10;
+
+        public float minBapTime = 0;
+        public float maxBapTime = 0.5f;
+        
 
         private float timeClicked = 0;
         private float timeFullExtended = 0;
 
-        private float wristTargetRot = 0;
-        private float wristRotSpeed = 0;
-        private float timerCurrWristBap = 0;
+        private float currWristAngle = 0;
+        private float currWristSpeed = 0;
+        private float currBapTimer = 0;
 
 
         public bool IsActive
@@ -100,18 +109,20 @@ namespace ATE.Bapper
         private void BapWrist()
         {
             if (timeFullExtended <= 0)
-                return;
-
-            timerCurrWristBap -= Time.deltaTime;
-            if (timerCurrWristBap <= 0)
             {
-                //TODO: Hard-coding
-                wristTargetRot = (Random.value * 135) - 20;
-                wristRotSpeed = (Random.value * 5) + 5;
-                timerCurrWristBap = Random.value / 2;
+                wristObj.localRotation = Quaternion.Lerp (wristObj.localRotation, Quaternion.identity, Time.deltaTime * currWristSpeed);
+                return;
             }
 
-            wristObj.rotation = Quaternion.Lerp (wristObj.rotation, Quaternion.Euler (0, 0, wristTargetRot), Time.deltaTime * wristRotSpeed);
+            currBapTimer -= Time.deltaTime;
+            if (currBapTimer <= 0)
+            {
+                currWristAngle = Random.Range (minWristAngle, maxWristAngle);
+                currWristSpeed = Random.Range (minWristSpeed, maxWristSpeed);
+                currBapTimer =   Random.Range (minBapTime,    maxBapTime);
+            }
+
+            wristObj.localRotation = Quaternion.Lerp (wristObj.localRotation, Quaternion.Euler (0, 0, currWristAngle), Time.deltaTime * currWristSpeed);
         }
 
     }

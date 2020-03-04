@@ -965,7 +965,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1173817143}
   - component: {fileID: 1173817145}
-  - component: {fileID: 1173817144}
   - component: {fileID: 1173817142}
   m_Layer: 0
   m_Name: BapperLeft
@@ -1016,6 +1015,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  minWristAngle: -120
+  maxWristAngle: 25
+  minWristSpeed: 5
+  maxWristSpeed: 10
+  minBapTime: 0
+  maxBapTime: 0.5
 --- !u!4 &1173817143
 Transform:
   m_ObjectHideFlags: 0
@@ -1032,27 +1037,6 @@ Transform:
   m_Father: {fileID: 898228975}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &1173817144
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1173817141}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1000
-  m_LinearDrag: 0
-  m_AngularDrag: 50
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!58 &1173817145
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1334,7 +1318,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1731950118}
   - component: {fileID: 1731950121}
-  - component: {fileID: 1731950120}
   - component: {fileID: 1731950119}
   m_Layer: 0
   m_Name: BapperRight
@@ -1401,27 +1384,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!50 &1731950120
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1731950117}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1000
-  m_LinearDrag: 0
-  m_AngularDrag: 50
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
+  minWristAngle: -30
+  maxWristAngle: 115
+  minWristSpeed: 5
+  maxWristSpeed: 10
+  minBapTime: 0
+  maxBapTime: 0.5
 --- !u!58 &1731950121
 CircleCollider2D:
   m_ObjectHideFlags: 0
