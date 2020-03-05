@@ -114,17 +114,23 @@ namespace ATE.Bapper
             if (timeFullExtended <= 0)
             {
                 wristObj.localRotation = Quaternion.Lerp (wristObj.localRotation, Quaternion.identity, Time.deltaTime * currWristSpeed);
-                pawCollision.bapForce = 0;
+                pawCollision.BapForce = 0;
                 return;
             }
 
             currBapTimer -= Time.deltaTime;
             if (currBapTimer <= 0)
             {
+                float prevWristAngle = currWristAngle;
                 currWristAngle = Random.Range (minWristAngle, maxWristAngle);
                 currWristSpeed = Random.Range (minWristSpeed, maxWristSpeed);
                 currBapTimer =   Random.Range (minBapTime,    maxBapTime);
-                pawCollision.bapForce = currWristSpeed * 10;
+
+                float angleLeftMult = prevWristAngle < currWristAngle ? -1 : 1;
+                float currSpeedMult = (currWristSpeed - minWristSpeed) / (maxWristSpeed - minWristSpeed);
+                float angleChangeMult = Mathf.Abs (prevWristAngle - currWristAngle) / (maxWristAngle - minWristAngle);
+
+                pawCollision.BapForce = angleLeftMult * currSpeedMult * angleChangeMult;
             }
 
             wristObj.localRotation = Quaternion.Lerp (wristObj.localRotation, Quaternion.Euler (0, 0, currWristAngle), Time.deltaTime * currWristSpeed);
