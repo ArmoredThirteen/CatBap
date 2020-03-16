@@ -130,7 +130,8 @@ namespace ATE.Bapper
                 float currSpeedMult = (currWristSpeed - minWristSpeed) / (maxWristSpeed - minWristSpeed);
                 float angleChangeMult = Mathf.Abs (prevWristAngle - currWristAngle) / (maxWristAngle - minWristAngle);
 
-                pawCollision.BapForce = angleLeftMult * currSpeedMult * angleChangeMult;
+                //pawCollision.BapForce = angleLeftMult * currSpeedMult * angleChangeMult;
+                pawCollision.BappyBap (angleLeftMult * currSpeedMult * angleChangeMult);
             }
 
             wristObj.localRotation = Quaternion.Lerp (wristObj.localRotation, Quaternion.Euler (0, 0, currWristAngle), Time.deltaTime * currWristSpeed);

@@ -767,13 +767,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824568857}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.47, y: -2.13, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.21290657, w: 0.9770726}
+  m_LocalPosition: {x: -1.87, y: -3.04, z: 0}
   m_LocalScale: {x: 7.7174997, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 258287684}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -24.585001}
 --- !u!61 &1824568859
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -924,6 +924,51 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6720497044694159373, guid: 8f9aeec623f49d244839a306b0010aad,
+        type: 3}
+      propertyPath: bapDuration
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720497044694159373, guid: 8f9aeec623f49d244839a306b0010aad,
+        type: 3}
+      propertyPath: bapForceLeft
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720497044694159373, guid: 8f9aeec623f49d244839a306b0010aad,
+        type: 3}
+      propertyPath: bapForceRight
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720497044812942939, guid: 8f9aeec623f49d244839a306b0010aad,
+        type: 3}
+      propertyPath: maxWristAngle
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720497044976812052, guid: 8f9aeec623f49d244839a306b0010aad,
+        type: 3}
+      propertyPath: bapDuration
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720497044976812052, guid: 8f9aeec623f49d244839a306b0010aad,
+        type: 3}
+      propertyPath: bapForceLeft
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720497044976812052, guid: 8f9aeec623f49d244839a306b0010aad,
+        type: 3}
+      propertyPath: bapForceRight
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720497045329624906, guid: 8f9aeec623f49d244839a306b0010aad,
+        type: 3}
+      propertyPath: maxWristAngle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720497045329624906, guid: 8f9aeec623f49d244839a306b0010aad,
+        type: 3}
+      propertyPath: minWristAngle
+      value: -80
+      objectReference: {fileID: 0}
     - target: {fileID: 6720497045591939729, guid: 8f9aeec623f49d244839a306b0010aad,
         type: 3}
       propertyPath: m_Name
