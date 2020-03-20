@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57dcd8c834c6c354f9d9c0f73c4e16e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bapDuration: 0.05
   bapForceLeft: 5
   bapForceRight: 3
   bapForceMove: 50
@@ -355,6 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57dcd8c834c6c354f9d9c0f73c4e16e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bapDuration: 0.05
   bapForceLeft: 5
   bapForceRight: 3
   bapForceMove: 50
