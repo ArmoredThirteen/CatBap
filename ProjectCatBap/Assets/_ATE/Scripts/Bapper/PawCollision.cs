@@ -6,6 +6,9 @@ namespace ATE.Bapper
 {
 	public class PawCollision : MonoBehaviour
 	{
+        // Duration to keep bap active when triggered
+        public float bapDuration = 0.05f;
+
         // The many types of force multipliers for designers to tune the physics
         public float bapForceLeft    = 1;
         public float bapForceRight   = 1;
@@ -21,6 +24,8 @@ namespace ATE.Bapper
         // Historical movement vectors, not just world position
         private Queue<Vector2> moveVects = new Queue<Vector2> ();
 
+        private float bapForceTimer;
+
 
         public float BapForce { get; set; }
 
@@ -32,17 +37,27 @@ namespace ATE.Bapper
 
         private void Update()
         {
-            Debug.Log ("bapforce: " + BapForce);
-
             moveVects.Enqueue ((Vector2)transform.position - lastPos);
             if (moveVects.Count > moveVectorSmooth)
                 moveVects.Dequeue ();
 
             lastPos = transform.position;
+            bapForceTimer -= Time.deltaTime;
         }
+
+
+        public void BappyBap(float bapForce)
+        {
+            BapForce = bapForce;
+            bapForceTimer = bapDuration;
+        }
+
 
         private void OnTriggerStay2D(Collider2D collision)
         {
+            if (bapForceTimer <= 0)
+                return;
+
             //TODO: Need to better figure out the BapForce calculations
             // Bap vector is largely taken from how quickly paw is rotating left or right
             float leftRightMult = BapForce < 0 ? -bapForceLeft : bapForceRight;
