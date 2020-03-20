@@ -17,6 +17,7 @@ namespace ATE.Points
 
         private void Awake()
         {
+            // Singleton
             if (instance == null)
                 instance = this;
             else if (instance != this)
@@ -25,6 +26,7 @@ namespace ATE.Points
 
         private void Start()
         {
+            //TODO: May behave weirdly during scene change, not sure until tested
             EventManager.AddListener (EventID.AddPoints, AddPoints);
         }
 
