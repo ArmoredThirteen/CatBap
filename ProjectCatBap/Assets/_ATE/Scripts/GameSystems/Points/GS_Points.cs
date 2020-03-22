@@ -1,13 +1,15 @@
 ﻿using ATE.Events;
+using ATE.GameSystems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ATE.Points
 {
-	public class PointsManager : MonoBehaviour
+	public class GS_Points : GameSystem
 	{
-        public static PointsManager instance = null;
+        [HideInInspector]
+        public static GS_Points instance = null;
 
         public int Points
         {
@@ -27,7 +29,7 @@ namespace ATE.Points
         private void Start()
         {
             //TODO: May behave weirdly during scene change, not sure until tested
-            EventManager.AddListener (EventID.AddPoints, AddPoints);
+            GS_Events.AddListener (EventID.AddPoints, AddPoints);
         }
 
 
@@ -48,7 +50,7 @@ namespace ATE.Points
         //   before this class triggers, and report an out of sync value.
         public void InvokePointsChanged()
         {
-            EventManager.Invoke (EventID.PointsChanged, instance.Points);
+            GS_Events.Invoke (EventID.PointsChanged, instance.Points);
         }
 
     }
