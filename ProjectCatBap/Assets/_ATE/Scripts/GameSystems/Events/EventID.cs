@@ -6,5 +6,11 @@
         AddPoints,
         SetPoints,
         PointsChanged,
+
+        // Noise system
+        AddNoise,
+        RemoveNoise,
+        NoiseLevelIncrease,
+        NoiseLevelDecrease,
     }
 }

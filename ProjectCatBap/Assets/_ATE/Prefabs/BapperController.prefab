@@ -142,10 +142,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bapDuration: 0.05
-  bapForceLeft: 5
-  bapForceRight: 3
+  bapForceLeft: 12
+  bapForceRight: 10
   bapForceMove: 50
-  bapForceForward: 0.5
+  bapForceForward: 2
   moveVectorSmooth: 5
 --- !u!1 &6720497044812942937
 GameObject:
@@ -173,7 +173,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6720497044812942937}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.5, y: -4.5, z: 0}
+  m_LocalPosition: {x: 2, y: -4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6720497045533790859}
@@ -240,8 +240,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  minWristAngle: -30
-  maxWristAngle: 115
+  minWristAngle: -15
+  maxWristAngle: 85
   minWristSpeed: 5
   maxWristSpeed: 10
   minBapTime: 0
@@ -357,10 +357,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bapDuration: 0.05
-  bapForceLeft: 5
-  bapForceRight: 3
+  bapForceLeft: 10
+  bapForceRight: 12
   bapForceMove: 50
-  bapForceForward: 0.5
+  bapForceForward: 2
   moveVectorSmooth: 5
 --- !u!1 &6720497045104418975
 GameObject:
@@ -577,7 +577,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6720497045329624905}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.5, y: -4.5, z: 0}
+  m_LocalPosition: {x: -2, y: -4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6720497045482996700}
@@ -644,8 +644,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  minWristAngle: -120
-  maxWristAngle: 25
+  minWristAngle: -85
+  maxWristAngle: 15
   minWristSpeed: 5
   maxWristSpeed: 10
   minBapTime: 0

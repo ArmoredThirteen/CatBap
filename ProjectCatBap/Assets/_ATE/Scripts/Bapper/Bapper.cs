@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ATE.Bapper
+namespace ATE.Baps
 {
     // Click/hold at location
     // Arm moves to location
