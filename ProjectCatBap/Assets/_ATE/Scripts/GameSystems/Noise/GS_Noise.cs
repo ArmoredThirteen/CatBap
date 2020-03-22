@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ATE.noise
+namespace ATE.Noise
 {
 	public class GS_Noise : GameSystem
 	{

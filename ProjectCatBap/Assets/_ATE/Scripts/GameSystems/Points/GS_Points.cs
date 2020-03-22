@@ -30,6 +30,7 @@ namespace ATE.Points
         {
             //TODO: May behave weirdly during scene change, not sure until tested
             GS_Events.AddListener (EventID.AddPoints, AddPoints);
+            GS_Events.AddListener (EventID.SetPoints, SetPoints);
         }
 
 
@@ -50,6 +51,7 @@ namespace ATE.Points
         //   before this class triggers, and report an out of sync value.
         public void InvokePointsChanged()
         {
+            Debug.Log ("New points: " + instance.Points);
             GS_Events.Invoke (EventID.PointsChanged, instance.Points);
         }
 
