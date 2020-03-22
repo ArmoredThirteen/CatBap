@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ATE.Bapper
+namespace ATE.Baps
 {
 	public class BapperController : MonoBehaviour
 	{

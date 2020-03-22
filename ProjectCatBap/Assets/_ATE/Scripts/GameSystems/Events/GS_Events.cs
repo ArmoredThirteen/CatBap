@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using ATE.GameSystems;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,10 +8,10 @@ namespace ATE.Events
 {
     public class ThisEvent : UnityEvent<object[]> {}
     
-	public class EventManager : MonoBehaviour
+	public class GS_Events : GameSystem
 	{
         [HideInInspector]
-        public static EventManager instance = null;
+        public static GS_Events instance = null;
 
         private Dictionary<EventID, ThisEvent> events = null;
 
