@@ -7,8 +7,13 @@ namespace ATE.Baps
 {
 	public class Bappee : MonoBehaviour
 	{
+        // How much noise to send based on movement
         public float noise = 1;
-        public int points = 0;
+        // Noise less than minNoise won't send
+        public float minTrackedNoise = 0.1f;
+
+        // Base points for getting object to desired location
+        //public int points = 0;
 
 
         private Vector2 lastPos;
@@ -24,10 +29,11 @@ namespace ATE.Baps
             if (lastPos == (Vector2)transform.position)
                 return;
 
-            float moveAmount = ((Vector2)transform.position - lastPos).magnitude;
+            float noiseAmount = noise * ((Vector2)transform.position - lastPos).magnitude;
             lastPos = transform.position;
 
-            GS_Events.Invoke (EventID.AddNoise, moveAmount * noise);
+            if (noiseAmount >= minTrackedNoise)
+                GS_Events.Invoke (EventID.AddNoise, noiseAmount);
         }
 
     }

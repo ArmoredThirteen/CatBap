@@ -44,8 +44,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instance: {fileID: 0}
-  currentNoise: 0
+  currNoise: 0
   noiseDecay: 1
+  noiseLevels:
+  - 10
+  - 20
+  - 30
 --- !u!1 &2218023992031186330
 GameObject:
   m_ObjectHideFlags: 0
