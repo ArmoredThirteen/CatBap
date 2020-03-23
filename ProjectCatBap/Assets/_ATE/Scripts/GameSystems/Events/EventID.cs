@@ -2,6 +2,10 @@
 {
     public enum EventID
     {
+        // Win/Loss
+        LevelWin,
+        LevelLose,
+
         // Points system
         AddPoints,
         RemovePoints,
