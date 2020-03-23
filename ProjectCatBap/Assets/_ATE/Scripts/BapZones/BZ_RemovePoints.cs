@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ATE.Baps
+namespace ATE.Baps.Zones
 {
-	public class BZ_Success : BapZone
+	public class BZ_RemovePoints : BapZone
 	{
         // Points added to bappee points
-        public int pointsAdditional = 0;
+        public int pointsAdd = 0;
         // How much to multiply points by, after adding
-        public int pointsMultiplier = 1;
+        public int pointsMultiply = 1;
 
 
         protected override void OnTriggered(Bappee bappee)
         {
-            int totalPoints = (bappee.points + pointsAdditional) * pointsMultiplier;
-            GS_Events.Invoke (EventID.AddPoints, totalPoints);
+            int totalPoints = (bappee.points + pointsAdd) * pointsMultiply;
+            GS_Events.Invoke (EventID.RemovePoints, totalPoints);
         }
 
     }
