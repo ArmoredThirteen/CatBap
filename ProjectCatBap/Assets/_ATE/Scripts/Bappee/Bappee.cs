@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ATE.Events;
+using ATE.Baps.Zones;
 
 namespace ATE.Baps
 {

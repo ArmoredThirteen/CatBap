@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ATE.Baps
+namespace ATE.Baps.Zones
 {
     // Target zone that can be triggered by a Bappee
     [RequireComponent(typeof(Collider2D))]
