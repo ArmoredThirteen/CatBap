@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace ATE.Baps.Zones
 {
-	public class BZ_LevelWin: BapZone
+	public class BZ_WinLevel: BapZone
 	{
         protected override void OnTriggered(Bappee bappee)
         {
-            GS_Events.Invoke (EventID.LevelWin);
+            GS_Events.Invoke (EventID.WinLevel);
         }
 
     }
