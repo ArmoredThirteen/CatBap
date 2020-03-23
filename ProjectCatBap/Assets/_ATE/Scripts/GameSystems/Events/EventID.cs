@@ -4,6 +4,7 @@
     {
         // Points system
         AddPoints,
+        RemovePoints,
         SetPoints,
         PointsChanged,
 

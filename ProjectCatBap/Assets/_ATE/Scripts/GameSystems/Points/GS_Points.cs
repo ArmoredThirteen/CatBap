@@ -30,6 +30,7 @@ namespace ATE.Points
         {
             //TODO: May behave weirdly during scene change, not sure until tested
             GS_Events.AddListener (EventID.AddPoints, AddPoints);
+            GS_Events.AddListener (EventID.RemovePoints, AddPoints);
             GS_Events.AddListener (EventID.SetPoints, SetPoints);
         }
 
@@ -37,6 +38,12 @@ namespace ATE.Points
         public void AddPoints(object[] args)
         {
             instance.Points += (int)args[0];
+            InvokePointsChanged ();
+        }
+
+        public void RemovePoints(object[] args)
+        {
+            instance.Points -= (int)args[0];
             InvokePointsChanged ();
         }
 
