@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ATE.Baps
+namespace ATE.Baps.Zones
 {
 	public class BZ_LevelWin: BapZone
 	{
