@@ -6,18 +6,7 @@ namespace ATE
 {
 	public class #SCRIPTNAME# : MonoBehaviour
 	{
-
-		// Use this for initialization
-		void Start ()
-		{
-			#NOTRIM#
-		}
-		
-		// Update is called once per frame
-		void Update ()
-		{
-			#NOTRIM#
-		}
-		
+		#NOTRIM#
+		#NOTRIM#
 	}
 }
