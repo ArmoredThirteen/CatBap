@@ -126,8 +126,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.84, y: 0.95}
+  m_Offset: {x: -0.16, y: 0}
+  m_Size: {x: 0.5, y: 0.5}
   m_Direction: 0
 --- !u!114 &6720497044694159373
 MonoBehaviour:
@@ -141,9 +141,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57dcd8c834c6c354f9d9c0f73c4e16e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  castRadius: 0.3
+  castDist: 0.15
   bapDuration: 0.05
-  bapForceLeft: 12
-  bapForceRight: 10
+  bapForceLeft: 20
+  bapForceRight: 15
   bapForceMove: 50
   bapForceForward: 2
   moveVectorSmooth: 5
@@ -356,9 +358,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57dcd8c834c6c354f9d9c0f73c4e16e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  castRadius: 0.3
+  castDist: 0.15
   bapDuration: 0.05
-  bapForceLeft: 10
-  bapForceRight: 12
+  bapForceLeft: 20
+  bapForceRight: 15
   bapForceMove: 50
   bapForceForward: 2
   moveVectorSmooth: 5
