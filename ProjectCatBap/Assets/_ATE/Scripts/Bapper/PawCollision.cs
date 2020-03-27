@@ -6,6 +6,9 @@ namespace ATE.Baps
 {
 	public class PawCollision : MonoBehaviour
 	{
+        public float castRadius = 1;
+        public float castDist = 1;
+
         // Duration to keep bap active when triggered
         public float bapDuration = 0.05f;
 
@@ -24,11 +27,6 @@ namespace ATE.Baps
         // Historical movement vectors, not just world position
         private Queue<Vector2> moveVects = new Queue<Vector2> ();
 
-        private float bapForceTimer;
-
-
-        public float BapForce { get; set; }
-
 
         private void Awake()
         {
@@ -42,26 +40,16 @@ namespace ATE.Baps
                 moveVects.Dequeue ();
 
             lastPos = transform.position;
-            bapForceTimer -= Time.deltaTime;
         }
 
 
+        //TODO: Algorithm isn't quite right, and overall Bapper vs PawCollision has
+        //      really weird separation of powers
         public void BappyBap(float bapForce)
         {
-            BapForce = bapForce;
-            bapForceTimer = bapDuration;
-        }
-
-
-        private void OnTriggerStay2D(Collider2D collision)
-        {
-            if (bapForceTimer <= 0)
-                return;
-
-            //TODO: Need to better figure out the BapForce calculations
             // Bap vector is largely taken from how quickly paw is rotating left or right
-            float leftRightMult = BapForce < 0 ? -bapForceLeft : bapForceRight;
-            Vector2 bapVect = transform.right * leftRightMult;// * BapForce;
+            float leftRightMult = bapForce < 0 ? -bapForceLeft : bapForceRight;
+            Vector2 bapVect = transform.right * leftRightMult;
 
             // Movement vector is average of moveVects
             Vector2 moveVect = Vector2.zero;
@@ -76,8 +64,22 @@ namespace ATE.Baps
             // Manual weight for this axis since the left/right bap limits feels wrong
             Vector2 bapForwardVect = transform.up * bapForceForward;
 
-            // Add it all up and there we go, some crazy force vector
-            collision.attachedRigidbody.AddForceAtPosition (bapVect + moveVect + bapForwardVect, transform.position);
+            //Vector2 castDir = bapVect + moveVect + bapForwardVect;
+            Vector2 castDir = bapVect;
+
+            // Vector2 origin, float radius, Vector2 direction, float distance
+            RaycastHit2D[] hits = Physics2D.CircleCastAll (transform.position, castRadius, castDir, castDist);
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                Bappee hitObj = hits[i].collider.GetComponent<Bappee> ();
+                if (hitObj == null)
+                    continue;
+
+                Vector2 forceVect = ((Vector2)hitObj.transform.position - hits[i].point).normalized * castDir.magnitude;
+
+                hits[i].collider.attachedRigidbody.AddForceAtPosition (forceVect, hits[i].point);
+            }
         }
 		
 	}

@@ -401,8 +401,8 @@ MonoBehaviour:
   isEnabled: 1
   removeBappee: 0
   disableAfterProcesses: -1
-  pointsAdditional: 0
-  pointsMultiplier: 1
+  pointsAdd: 0
+  pointsMultiply: 1
 --- !u!61 &319089698
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -863,8 +863,8 @@ MonoBehaviour:
   isEnabled: 1
   removeBappee: 0
   disableAfterProcesses: -1
-  pointsAdditional: 0
-  pointsMultiplier: 1
+  pointsAdd: 0
+  pointsMultiply: 1
 --- !u!61 &1482357469
 BoxCollider2D:
   m_ObjectHideFlags: 0
