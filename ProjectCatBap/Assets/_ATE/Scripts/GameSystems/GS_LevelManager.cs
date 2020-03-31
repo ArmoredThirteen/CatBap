@@ -23,7 +23,6 @@ namespace ATE.Scenes
         
         private void Start()
         {
-            //TODO: May behave weirdly during scene change, not sure until tested
             GS_Events.AddListener (EventID.LoadLevel, LoadLevel);
             //GS_Events.AddListener (EventID.WinLevel, WinLevel);
             //GS_Events.AddListener (EventID.LoseLevel, LoseLevel);
@@ -32,8 +31,9 @@ namespace ATE.Scenes
 
         public void LoadLevel(object[] args)
         {
-            Debug.Log ("Loading Scene: " + SceneManager.GetSceneByBuildIndex ((int)args[0]));
-            SceneManager.LoadSceneAsync ((int)args[0]);
+            int scene = (int)args[0];
+            Debug.Log ("Loading Scene #" + scene + ": " + SceneUtility.GetScenePathByBuildIndex(scene));
+            SceneManager.LoadSceneAsync (scene);
         }
 
 	}

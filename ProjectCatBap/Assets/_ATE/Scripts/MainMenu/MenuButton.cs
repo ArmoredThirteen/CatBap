@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ATE
+namespace ATE.Menu
 {
     [RequireComponent(typeof(Collider2D))]
 	public abstract class MenuButton : MonoBehaviour

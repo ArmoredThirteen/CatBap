@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ATE
+namespace ATE.Menu
 {
 	public class MB_LoadScene : MenuButton
 	{
