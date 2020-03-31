@@ -114,7 +114,6 @@ namespace ATE.Baps
             if (timeFullExtended <= 0)
             {
                 wristObj.localRotation = Quaternion.Lerp (wristObj.localRotation, Quaternion.identity, Time.deltaTime * currWristSpeed);
-                pawCollision.BapForce = 0;
                 return;
             }
 
@@ -130,7 +129,6 @@ namespace ATE.Baps
                 float currSpeedMult = (currWristSpeed - minWristSpeed) / (maxWristSpeed - minWristSpeed);
                 float angleChangeMult = Mathf.Abs (prevWristAngle - currWristAngle) / (maxWristAngle - minWristAngle);
 
-                //pawCollision.BapForce = angleLeftMult * currSpeedMult * angleChangeMult;
                 pawCollision.BappyBap (angleLeftMult * currSpeedMult * angleChangeMult);
             }
 

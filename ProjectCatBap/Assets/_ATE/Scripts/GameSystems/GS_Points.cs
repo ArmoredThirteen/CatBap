@@ -28,7 +28,6 @@ namespace ATE.Points
 
         private void Start()
         {
-            //TODO: May behave weirdly during scene change, not sure until tested
             GS_Events.AddListener (EventID.AddPoints, AddPoints);
             GS_Events.AddListener (EventID.RemovePoints, AddPoints);
             GS_Events.AddListener (EventID.SetPoints, SetPoints);
