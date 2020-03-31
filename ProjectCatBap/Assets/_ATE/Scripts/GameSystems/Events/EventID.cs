@@ -2,7 +2,8 @@
 {
     public enum EventID
     {
-        // Win/Loss
+        // Level interaction
+        LoadLevel,
         WinLevel,
         LoseLevel,
 

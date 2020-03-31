@@ -33,7 +33,6 @@ namespace ATE.Noise
 
         private void Start()
         {
-            //TODO: May behave weirdly during scene change, not sure until tested
             GS_Events.AddListener (EventID.AddNoise, AddNoise);
             GS_Events.AddListener (EventID.RemoveNoise, RemoveNoise);
             //GS_Events.AddListener (EventID.NoiseLevelIncrease, LogNoiseLevelIncrease);
