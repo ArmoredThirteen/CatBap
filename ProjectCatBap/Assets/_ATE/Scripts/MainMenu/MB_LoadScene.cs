@@ -7,12 +7,12 @@ namespace ATE.Menu
 {
 	public class MB_LoadScene : MenuButton
 	{
-        public int sceneBuildIndex = 0;
+        public string sceneName = "MainMenu";
 
 
         protected override void OnClicked()
         {
-            GS_Events.Invoke (EventID.LoadLevel, sceneBuildIndex);
+            GS_Events.Invoke (EventID.LoadLevel, sceneName);
         }
 
     }

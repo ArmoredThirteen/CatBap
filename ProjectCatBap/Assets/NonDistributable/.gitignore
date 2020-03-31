@@ -1,0 +1,5 @@
+# This folder is for all things that are allowed in the game but not allowed to be distributed
+# Things like commercially usable but non-distributable fonts
+# Must be ignored entirely while the git repo is public, but could be added later if repo goes private
+*
+!.gitignore
