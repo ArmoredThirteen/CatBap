@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_ATE/Scenes/Levels/Tutorial.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/_ATE/Scenes/Levels/Pachinko.unity
+    guid: c9164d5863178684eb2e9f8c3b19eb42
   m_configObjects: {}
