@@ -31,9 +31,9 @@ namespace ATE.Scenes
 
         public void LoadLevel(object[] args)
         {
-            int scene = (int)args[0];
-            Debug.Log ("Loading Scene #" + scene + ": " + SceneUtility.GetScenePathByBuildIndex(scene));
-            SceneManager.LoadSceneAsync (scene);
+            string sceneName = (string)args[0];
+            Debug.Log ($"Loading Scene [{sceneName}]");
+            SceneManager.LoadSceneAsync (sceneName);
         }
 
 	}
