@@ -2,6 +2,11 @@
 {
     public enum EventID
     {
+        // Game data
+        LoadGame,
+        SaveGame,
+        WipeGame,
+
         // Level interaction
         LoadLevel,
         WinLevel,

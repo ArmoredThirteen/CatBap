@@ -9,8 +9,10 @@ namespace ATE.Scenes
 	public class GS_LevelManager : MonoBehaviour
 	{
 		[HideInInspector]
-        public GS_LevelManager instance = null;
-		
+        public static GS_LevelManager instance = null;
+
+        public int unlockedLevels = 1;
+
 
         private void Awake()
         {
