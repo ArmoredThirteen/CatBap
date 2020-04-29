@@ -3,6 +3,7 @@
 using ATE.Events;
 using ATE.GameSystems;
 using ATE.Scenes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,18 +41,18 @@ namespace ATE.GameSaves
 
         public void LoadGame(object[] args)
         {
-            #if DEBUGLOG
+#if DEBUGLOG
             Debug.Log ("Loading Game");
-            #endif
+#endif
 
-            GS_LevelManager.instance.unlockedLevels = PlayerPrefs.GetInt (UnlockedLevels);
+            GS_LevelManager.instance.unlockedLevels = GetIfExists<int> (PlayerPrefs.GetInt, UnlockedLevels, GS_LevelManager.instance.unlockedLevels);
         }
 
         public void SaveGame(object[] args)
         {
-            #if DEBUGLOG
+#if DEBUGLOG
             Debug.Log ("Saving Game");
-            #endif
+#endif
 
             PlayerPrefs.SetInt (UnlockedLevels, GS_LevelManager.instance.unlockedLevels);
             PlayerPrefs.Save ();
@@ -59,12 +60,25 @@ namespace ATE.GameSaves
 
         public void WipeGame(object[] args)
         {
-            #if DEBUGLOG
+#if DEBUGLOG
             Debug.Log ("Wiping Game");
-            #endif
+#endif
 
-            if (PlayerPrefs.HasKey (UnlockedLevels))
-                PlayerPrefs.DeleteKey (UnlockedLevels);
+            DeleteIfExists (UnlockedLevels);
+        }
+
+
+        public T GetIfExists<T>(Func<string, T> getFunc, string key, T defVal)
+        {
+            if (PlayerPrefs.HasKey (key))
+                return getFunc (key);
+            return defVal;
+        }
+
+        private void DeleteIfExists(string key)
+        {
+            if (PlayerPrefs.HasKey (key))
+                PlayerPrefs.DeleteKey (key);
         }
 		
 	}
