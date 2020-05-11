@@ -2,7 +2,7 @@
 
 using ATE.Events;
 using ATE.GameSystems;
-using ATE.Scenes;
+using ATE.Levels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 
 namespace ATE.GameSaves
 {
-	public class GS_SaveManager : GameSystem
+	public class GS_GameSaving : GameSystem
 	{
         [System.Serializable]
         public class JsonSaveObj
@@ -27,27 +27,12 @@ namespace ATE.GameSaves
                 }
             }
 
-            public Level[] levels;
-
-            public JsonSaveObj(int[] levelScores)
-            {
-                levels = new Level[levelScores.Length];
-                for (int i = 0; i < levelScores.Length; i++)
-                    levels[i] = new Level (levelScores[i]);
-            }
-
-            public List<int> GetScores()
-            {
-                List<int> levelScores = new List<int> ();
-                for (int i = 0; i < levels.Length; i++)
-                    levelScores.Add (levels[i].score);
-                return levelScores;
-            }
+            public List<Level> levels;
         }
 
 
 		[HideInInspector]
-        public static GS_SaveManager instance = null;
+        public static GS_GameSaving instance = null;
 
 
         private void Awake()
@@ -69,18 +54,26 @@ namespace ATE.GameSaves
 
         public void LoadGame(object[] args)
         {
-            string uri = $"http://armoredthirteen.net/ws_GameSaver.php?game={GetGame()}&userid={GetUserid()}&username={GetUsername()}";
-            StartCoroutine (WebLoadGame (uri));
+            StartCoroutine (WebLoadGame (GetURI ()));
         }
 
         public void SaveGame(object[] args)
         {
-            //StartCoroutine (WebSaveGame ());
+            //StartCoroutine (WebSaveGame (GetURI ()));
         }
 
         public void WipeGame(object[] args)
         {
 
+        }
+
+        private string GetURI()
+        {
+            string game = "CatBap";
+            string userid = "666";
+            string username = "ArmoredThirteen";
+
+            return $"http://armoredthirteen.net/ws_GameSaver.php?game={game}&userid={userid}&username={username}";
         }
 
 
@@ -95,11 +88,7 @@ namespace ATE.GameSaves
                 else if (webRequest.responseCode != 200)
                     Debug.Log ($"Invalid response code {webRequest.responseCode}: {webRequest.downloadHandler.text}");
                 else
-                {
-                    Debug.Log (webRequest.downloadHandler.text);
-                    JsonSaveObj responseObj = JsonUtility.FromJson<JsonSaveObj> (webRequest.downloadHandler.text);
-                    GS_LevelManager.instance.levelScores = responseObj.GetScores ();
-                }
+                    ApplySaveJson (webRequest.downloadHandler.text);
             }
         }
 
@@ -109,24 +98,32 @@ namespace ATE.GameSaves
         }*/
 
 
-        private string GetGame()
+        private void ApplySaveJson(string json)
         {
-            return "CatBap";
+            Debug.Log (json);
+            JsonSaveObj saveObj = JsonUtility.FromJson<JsonSaveObj> (json);
+
+            for (int i = 0; i < saveObj.levels.Count; i++)
+            {
+                GS_LevelData.Data currLevelData = GS_LevelData.instance.levelDatas[i];
+                currLevelData.unlocked = true;
+                currLevelData.highscore = saveObj.levels[i].score;
+            }
         }
 
-        private string GetUserid()
+        private string BuildSaveJson()
         {
-            return "666";
-        }
+            GS_LevelData.Data[] levelDatas = GS_LevelData.instance.levelDatas;
+            JsonSaveObj saveObj = new JsonSaveObj ();
 
-        private string GetUsername()
-        {
-            return "ArmoredThirteen";
-        }
+            for (int i = 0; i < levelDatas.Length; i++)
+            {
+                if (!levelDatas[i].unlocked)
+                    break;
+                saveObj.levels.Add (new JsonSaveObj.Level (levelDatas[i].highscore));
+            }
 
-        private string GetSaveJson()
-        {
-            return JsonUtility.ToJson (new JsonSaveObj (GS_LevelManager.instance.levelScores.ToArray ()));
+            return JsonUtility.ToJson (saveObj);
         }
 		
 	}

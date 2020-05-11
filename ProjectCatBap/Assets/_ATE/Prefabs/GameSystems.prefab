@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 295499726794302680}
   - component: {fileID: 394824717614491014}
   m_Layer: 0
-  m_Name: SaveManager
+  m_Name: GameSaving
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4442730762713377369}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &394824717614491014
 MonoBehaviour:
@@ -72,7 +72,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4442730762713377369}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1408419913966527220
 MonoBehaviour:
@@ -136,6 +136,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f09dd7bb17b21419f392b361d7b52b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2579382048470794558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2765060693378440495}
+  - component: {fileID: 5264836326563989122}
+  m_Layer: 0
+  m_Name: LevelData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2765060693378440495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579382048470794558}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4442730762713377369}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5264836326563989122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579382048470794558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293ba8fdcc232cd4cb8b97694729972d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelDatas:
+  - sceneName: Tutorial
+    unlocked: 1
+    highscore: 0
+  - sceneName: Pachinko
+    unlocked: 0
+    highscore: 0
 --- !u!1 &5087111115563418991
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,9 +215,10 @@ Transform:
   m_Children:
   - {fileID: 3996034823399688490}
   - {fileID: 1494707674701595656}
-  - {fileID: 3187003379417705276}
-  - {fileID: 5745869229937327774}
+  - {fileID: 2765060693378440495}
   - {fileID: 295499726794302680}
+  - {fileID: 5745869229937327774}
+  - {fileID: 3187003379417705276}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -200,7 +251,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4442730762713377369}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1034974374715904422
 MonoBehaviour:
@@ -225,7 +276,7 @@ GameObject:
   - component: {fileID: 1494707674701595656}
   - component: {fileID: 458374587930255922}
   m_Layer: 0
-  m_Name: LevelManager
+  m_Name: LevelLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,4 +308,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e79ca75547ffea74d9d1cb5c1b81ca4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instance: {fileID: 0}
