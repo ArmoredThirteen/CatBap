@@ -413,6 +413,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 394824717614491014, guid: 6c9c5e18d959a5944bbd7484cbf701ea,
+        type: 3}
+      propertyPath: game
+      value: CatBap
+      objectReference: {fileID: 0}
+    - target: {fileID: 394824717614491014, guid: 6c9c5e18d959a5944bbd7484cbf701ea,
+        type: 3}
+      propertyPath: response
+      value: No such game
+      objectReference: {fileID: 0}
+    - target: {fileID: 394824717614491014, guid: 6c9c5e18d959a5944bbd7484cbf701ea,
+        type: 3}
+      propertyPath: userid
+      value: 666
+      objectReference: {fileID: 0}
+    - target: {fileID: 458374587930255922, guid: 6c9c5e18d959a5944bbd7484cbf701ea,
+        type: 3}
+      propertyPath: levelScores.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 458374587930255922, guid: 6c9c5e18d959a5944bbd7484cbf701ea,
+        type: 3}
+      propertyPath: levelScores.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458374587930255922, guid: 6c9c5e18d959a5944bbd7484cbf701ea,
+        type: 3}
+      propertyPath: levelScores.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4442730762713377369, guid: 6c9c5e18d959a5944bbd7484cbf701ea,
         type: 3}
       propertyPath: m_LocalPosition.x

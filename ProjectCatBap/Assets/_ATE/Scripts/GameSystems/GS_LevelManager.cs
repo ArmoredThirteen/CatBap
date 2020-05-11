@@ -11,7 +11,7 @@ namespace ATE.Scenes
 		[HideInInspector]
         public static GS_LevelManager instance = null;
 
-        public int unlockedLevels = 1;
+        public List<int> levelScores = new List<int> () { 0 };
 
 
         private void Awake()
@@ -28,6 +28,11 @@ namespace ATE.Scenes
             GS_Events.AddListener (EventID.LoadLevel, LoadLevel);
             //GS_Events.AddListener (EventID.WinLevel, WinLevel);
             //GS_Events.AddListener (EventID.LoseLevel, LoseLevel);
+
+            // Make sure at least the first level is unlocked
+            //TODO: Might be better to just exclude the tutorial level from the scoring/locking system
+            if (levelScores == null || levelScores.Count <= 0)
+                levelScores = new List<int> () { 0 };
         }
 
 
