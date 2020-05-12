@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace ATE.Scenes
+namespace ATE.Levels
 {
-	public class GS_LevelManager : MonoBehaviour
+	public class GS_LevelLoader : MonoBehaviour
 	{
 		[HideInInspector]
-        public GS_LevelManager instance = null;
-		
+        public static GS_LevelLoader instance = null;
+
 
         private void Awake()
         {
@@ -32,8 +32,8 @@ namespace ATE.Scenes
         public void LoadLevel(object[] args)
         {
             string sceneName = (string)args[0];
-            Debug.Log ($"Loading Scene [{sceneName}]");
             SceneManager.LoadSceneAsync (sceneName);
+            //Debug.Log ($"Loading Scene [{sceneName}]");
         }
 
 	}
