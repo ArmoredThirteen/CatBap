@@ -16,11 +16,9 @@ namespace ATE.GameSaves
 
             if (GUILayout.Button ("Load Game"))
                 targ.LoadGame (null);
-            /*if (GUILayout.Button ("Save Game"))
-                targ.SaveGame (null);*/
+            if (GUILayout.Button ("Save Game"))
+                targ.SaveGame (null);
         }
-
-        
 
     }
 }

@@ -32,8 +32,8 @@ namespace ATE.Levels
         public void LoadLevel(object[] args)
         {
             string sceneName = (string)args[0];
-            Debug.Log ($"Loading Scene [{sceneName}]");
             SceneManager.LoadSceneAsync (sceneName);
+            //Debug.Log ($"Loading Scene [{sceneName}]");
         }
 
 	}

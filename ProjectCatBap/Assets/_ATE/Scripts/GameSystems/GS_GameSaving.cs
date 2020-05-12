@@ -27,12 +27,14 @@ namespace ATE.GameSaves
                 }
             }
 
-            public List<Level> levels;
+            public List<Level> levels = new List<Level> ();
         }
 
 
 		[HideInInspector]
         public static GS_GameSaving instance = null;
+
+        public bool loadOnStart = true;
 
 
         private void Awake()
@@ -49,6 +51,9 @@ namespace ATE.GameSaves
             GS_Events.AddListener (EventID.LoadGame, LoadGame);
             GS_Events.AddListener (EventID.SaveGame, SaveGame);
             GS_Events.AddListener (EventID.WipeGame, WipeGame);
+
+            if (loadOnStart)
+                LoadGame (null);
         }
 
 
@@ -59,7 +64,7 @@ namespace ATE.GameSaves
 
         public void SaveGame(object[] args)
         {
-            //StartCoroutine (WebSaveGame (GetURI ()));
+            StartCoroutine (WebSaveGame (GetURI ()));
         }
 
         public void WipeGame(object[] args)
@@ -79,28 +84,41 @@ namespace ATE.GameSaves
 
         private IEnumerator WebLoadGame(string uri)
         {
-            using (UnityWebRequest webRequest = UnityWebRequest.Get (uri))
-            {
-                yield return webRequest.SendWebRequest ();
+            UnityWebRequest webRequest = UnityWebRequest.Get (uri);
 
-                if (webRequest.isNetworkError)
-                    Debug.Log ($"Error: {webRequest.error}");
-                else if (webRequest.responseCode != 200)
-                    Debug.Log ($"Invalid response code {webRequest.responseCode}: {webRequest.downloadHandler.text}");
-                else
-                    ApplySaveJson (webRequest.downloadHandler.text);
+            yield return webRequest.SendWebRequest ();
+
+            if (webRequest.isNetworkError)
+                Debug.Log ($"Error: {webRequest.error}");
+            else if (webRequest.responseCode != 200)
+                Debug.Log ($"Invalid response code {webRequest.responseCode}: {webRequest.downloadHandler.text}");
+            else
+            {
+                ApplySaveJson (webRequest.downloadHandler.text);
+                //Debug.Log ("Loading: " + webRequest.downloadHandler.text);
             }
         }
 
-        /*private IEnumerator WebSaveGame(string uri)
+        private IEnumerator WebSaveGame(string uri)
         {
+            UnityWebRequest webRequest = new UnityWebRequest (uri, "POST");
 
-        }*/
+            byte[] jsonToSend = new System.Text.UTF8Encoding ().GetBytes (BuildSaveJson ());
+            webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw (jsonToSend);
+            webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer ();
+            webRequest.SetRequestHeader ("Content-Type", "application/json");
+
+            yield return webRequest.SendWebRequest ();
+
+            if (webRequest.isNetworkError)
+                Debug.Log ($"Error: {webRequest.error}");
+            /*else
+                Debug.Log ("Game saved");*/
+        }
 
 
         private void ApplySaveJson(string json)
         {
-            Debug.Log (json);
             JsonSaveObj saveObj = JsonUtility.FromJson<JsonSaveObj> (json);
 
             for (int i = 0; i < saveObj.levels.Count; i++)
