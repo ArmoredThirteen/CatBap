@@ -8,17 +8,17 @@ namespace ATE.Levels
 	public class GS_LevelData : GameSystem
 	{
         [System.Serializable]
-        public class Data
+        public class Level
         {
             public string sceneName = "";
-            public bool unlocked = false;
+            public bool locked = true;
             public int highscore = 0;
         }
 
         [HideInInspector]
         public static GS_LevelData instance = null;
 
-        public Data[] levelDatas;
+        public Level[] levels;
 
 
         private void Awake()

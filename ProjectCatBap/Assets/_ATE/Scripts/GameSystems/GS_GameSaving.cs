@@ -123,20 +123,20 @@ namespace ATE.GameSaves
 
             for (int i = 0; i < saveObj.levels.Count; i++)
             {
-                GS_LevelData.Data currLevelData = GS_LevelData.instance.levelDatas[i];
-                currLevelData.unlocked = true;
+                GS_LevelData.Level currLevelData = GS_LevelData.instance.levels[i];
+                currLevelData.locked = false;
                 currLevelData.highscore = saveObj.levels[i].score;
             }
         }
 
         private string BuildSaveJson()
         {
-            GS_LevelData.Data[] levelDatas = GS_LevelData.instance.levelDatas;
+            GS_LevelData.Level[] levelDatas = GS_LevelData.instance.levels;
             JsonSaveObj saveObj = new JsonSaveObj ();
 
             for (int i = 0; i < levelDatas.Length; i++)
             {
-                if (!levelDatas[i].unlocked)
+                if (levelDatas[i].locked)
                     break;
                 saveObj.levels.Add (new JsonSaveObj.Level (levelDatas[i].highscore));
             }
