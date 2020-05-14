@@ -95,6 +95,7 @@ namespace ATE.GameSaves
             else
             {
                 ApplySaveJson (webRequest.downloadHandler.text);
+                GS_Events.Invoke (EventID.GameLoaded);
                 //Debug.Log ("Loading: " + webRequest.downloadHandler.text);
             }
         }
@@ -112,8 +113,11 @@ namespace ATE.GameSaves
 
             if (webRequest.isNetworkError)
                 Debug.Log ($"Error: {webRequest.error}");
-            /*else
-                Debug.Log ("Game saved");*/
+            else
+            {
+                GS_Events.Invoke (EventID.GameSaved);
+                //Debug.Log ("Game saved");
+            }
         }
 
 

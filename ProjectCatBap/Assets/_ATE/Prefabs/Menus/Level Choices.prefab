@@ -45,3 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonPrefab: {fileID: 3893341453707407091, guid: 3cfc7b78c25f4b0439dd52e0c5fbd2a6,
     type: 3}
+  lockedPrefab: {fileID: 2756855068938044939, guid: 717486d87e57be94995fd4fb4de2823a,
+    type: 3}
+  columns: 4
+  columnSpacing: 4
+  rowSpacing: 2
