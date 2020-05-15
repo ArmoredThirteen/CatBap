@@ -166,6 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Level Select
+  labelText: {fileID: 4269967296502162950}
+  secondaryText: {fileID: 0}
 --- !u!1 &5642358361363441242
 GameObject:
   m_ObjectHideFlags: 0
