@@ -8,6 +8,8 @@ namespace ATE.Menu
 	public class MB_LoadScene : MenuButton
 	{
         public string sceneName = "MainMenu";
+        public TextMesh labelText;
+        public TextMesh secondaryText;
 
 
         protected override void OnClicked()

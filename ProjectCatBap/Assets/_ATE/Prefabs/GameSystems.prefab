@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0bba6e0d83b644fa184d6d437368aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadOnStart: 1
 --- !u!1 &1717447656174150525
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,12 +180,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293ba8fdcc232cd4cb8b97694729972d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelDatas:
+  levels:
   - sceneName: Tutorial
-    unlocked: 1
+    locked: 0
     highscore: 0
   - sceneName: Pachinko
-    unlocked: 0
+    locked: 1
     highscore: 0
 --- !u!1 &5087111115563418991
 GameObject:
