@@ -166,6 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Credits
+  labelText: {fileID: 7189694653352140355}
+  secondaryText: {fileID: 0}
 --- !u!1 &6190779125324671619
 GameObject:
   m_ObjectHideFlags: 0

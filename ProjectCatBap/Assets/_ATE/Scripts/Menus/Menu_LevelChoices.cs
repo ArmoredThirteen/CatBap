@@ -33,14 +33,14 @@ namespace ATE.Menu
             GS_LevelData.Level[] levelDatas = GS_LevelData.instance.levels;
             for (int i = 0; i < levelDatas.Length; i++)
             {
-                float xPos = (i % (columns - 1)) * columnSpacing;
-                float yPos = (i / (columns - 1)) * -rowSpacing;
+                float xPos = (i % columns) * columnSpacing;
+                float yPos = (i / columns) * -rowSpacing;
 
                 // Button is locked or actually goes to a scene
                 if (levelDatas[i].locked)
                     BuildButton_Locked (xPos, yPos);
                 else
-                    BuildButton_Level (levelDatas[i].sceneName, xPos, yPos);
+                    BuildButton_Level (levelDatas[i].sceneName, levelDatas[i].highscore, xPos, yPos);
             }
         }
         
@@ -51,14 +51,13 @@ namespace ATE.Menu
             button.transform.localPosition = new Vector3 (xPos, yPos, 0);
         }
 
-        private void BuildButton_Level(string sceneName, float xPos, float yPos)
+        private void BuildButton_Level(string sceneName, int highscore, float xPos, float yPos)
         {
             MB_LoadScene button = GameObject.Instantiate<MB_LoadScene> (buttonPrefab, transform);
             button.transform.localPosition = new Vector3 (xPos, yPos, 0);
             button.sceneName = sceneName;
-
-            TextMesh text = button.GetComponentInChildren<TextMesh> ();
-            text.text = sceneName;
+            button.labelText.text = sceneName;
+            button.secondaryText.text = "Highscore: " + highscore;
         }
 
     }

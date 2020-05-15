@@ -259,3 +259,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Main Menu
+  labelText: {fileID: 1198099755536785506}
+  secondaryText: {fileID: 0}
