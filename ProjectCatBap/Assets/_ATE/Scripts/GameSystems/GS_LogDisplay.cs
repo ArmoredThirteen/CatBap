@@ -7,6 +7,9 @@ namespace ATE
 {
 	public class GS_LogDisplay : GameSystem
 	{
+        [HideInInspector]
+        public static GS_LogDisplay instance = null;
+
         public int maxLogs = 5;
         public TextMesh text;
         public Vector3 textPosition;
@@ -15,6 +18,15 @@ namespace ATE
 
 
         private void Awake()
+        {
+            // Singleton
+            if (instance == null)
+                instance = this;
+            else if (instance != this)
+                Destroy (gameObject);
+        }
+
+        private void Start()
         {
             text.transform.position = textPosition;
         }

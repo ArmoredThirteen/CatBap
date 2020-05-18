@@ -96,7 +96,7 @@ namespace ATE.GameSaves
             {
                 ApplySaveJson (webRequest.downloadHandler.text);
                 GS_Events.Invoke (EventID.GameLoaded);
-                Debug.Log ("Loading: " + webRequest.downloadHandler.text);
+                //Debug.Log ("Loading: " + webRequest.downloadHandler.text);
             }
         }
 
