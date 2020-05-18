@@ -78,7 +78,7 @@ namespace ATE.GameSaves
             string userid = "666";
             string username = "ArmoredThirteen";
 
-            return $"http://armoredthirteen.net/ws_GameSaver.php?game={game}&userid={userid}&username={username}";
+            return $"https://armoredthirteen.net/ws_GameSaver.php?game={game}&userid={userid}&username={username}";
         }
 
 
@@ -89,14 +89,14 @@ namespace ATE.GameSaves
             yield return webRequest.SendWebRequest ();
 
             if (webRequest.isNetworkError)
-                Debug.Log ($"Error: {webRequest.error}");
+                Debug.Log ($"Error: {webRequest.error}: {webRequest.downloadHandler.text}");
             else if (webRequest.responseCode != 200)
                 Debug.Log ($"Invalid response code {webRequest.responseCode}: {webRequest.downloadHandler.text}");
             else
             {
                 ApplySaveJson (webRequest.downloadHandler.text);
                 GS_Events.Invoke (EventID.GameLoaded);
-                //Debug.Log ("Loading: " + webRequest.downloadHandler.text);
+                Debug.Log ("Loading: " + webRequest.downloadHandler.text);
             }
         }
 
