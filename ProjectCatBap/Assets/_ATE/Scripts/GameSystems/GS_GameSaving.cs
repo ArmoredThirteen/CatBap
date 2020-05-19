@@ -75,33 +75,37 @@ namespace ATE.GameSaves
         private string GetURI()
         {
             string game = "CatBap";
-            string userid = "666";
-            string username = "ArmoredThirteen";
 
-            return $"http://armoredthirteen.net/ws_GameSaver.php?game={game}&userid={userid}&username={username}";
+            int userid = GS_KongAPI.GetUserid ();
+            string username = GS_KongAPI.GetUsername ();
+            string kongauth = GS_KongAPI.GetAuth ();
+
+            return $"https://armoredthirteen.net/ws_GameSaver.php?game={game}&userid={userid}&username={username}&kongauth={kongauth}";
         }
 
 
         private IEnumerator WebLoadGame(string uri)
         {
+            //Debug.Log ("Loading game");
             UnityWebRequest webRequest = UnityWebRequest.Get (uri);
 
             yield return webRequest.SendWebRequest ();
 
             if (webRequest.isNetworkError)
-                Debug.Log ($"Error: {webRequest.error}");
+                Debug.Log ($"Error: {webRequest.error}: {webRequest.downloadHandler.text}");
             else if (webRequest.responseCode != 200)
                 Debug.Log ($"Invalid response code {webRequest.responseCode}: {webRequest.downloadHandler.text}");
             else
             {
                 ApplySaveJson (webRequest.downloadHandler.text);
                 GS_Events.Invoke (EventID.GameLoaded);
-                //Debug.Log ("Loading: " + webRequest.downloadHandler.text);
+                //Debug.Log ("Game loaded: " + webRequest.downloadHandler.text);
             }
         }
 
         private IEnumerator WebSaveGame(string uri)
         {
+            //Debug.Log ("Saving game");
             UnityWebRequest webRequest = new UnityWebRequest (uri, "POST");
 
             byte[] jsonToSend = new System.Text.UTF8Encoding ().GetBytes (BuildSaveJson ());
