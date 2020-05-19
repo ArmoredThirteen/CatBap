@@ -1,4 +1,5 @@
-﻿using ATE.GameSystems;
+﻿using ATE.Events;
+using ATE.GameSystems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,12 +15,30 @@ namespace ATE
 		[HideInInspector]
         public static GS_KongAPI instance = null;
 
+        public bool loadGameOnAPILoaded = true;
+
 
         private bool isLoaded = false;
 
-        private int userID = 0;
-        private string userName = "Guest";
-        private string gameAuthToken = "";
+        private int userid = 0;
+        private string username = "Guest";
+        private string auth = "";
+
+
+        public static int GetUserid ()
+        {
+            return instance.userid;
+        }
+
+        public static string GetUsername()
+        {
+            return instance.username;
+        }
+
+        public static string GetAuth()
+        {
+            return instance.auth;
+        }
 
 
         private void Awake()
@@ -31,34 +50,33 @@ namespace ATE
                 Destroy (gameObject);
         }
 
-
-        void Start() {
+        private void Start() {
 		    instance.Connect();
 	    }
 
-	    void Connect() {
+
+        private void Connect() {
             if (!isLoaded)
             {
-                Debug.Log ("Not isloaded");
                 Application.ExternalEval ("if(typeof(kongregateUnitySupport) != 'undefined') {" +
                     "kongregateUnitySupport.initAPI('" + gameObject.name + "', 'OnKongregateAPILoaded');" +
                     "}");
             }
-            else
-            {
-                Debug.Log ("Is isloaded");
-            }
 	    }
 
         void OnKongregateAPILoaded(string userInfo) {
-		    isLoaded = true;
+            isLoaded = true;
 
 		    string[] userStats = userInfo.Split("|"[0]);
-		    userID = int.Parse(userStats[0]);
-		    userName = userStats[1];
-		    gameAuthToken = userStats[2];
+		    userid = int.Parse(userStats[0]);
+		    username = userStats[1];
+		    auth = userStats[2];
 
-            Debug.Log ($"Kong -> userID: {userID}, userName: {userName}, authToken: {gameAuthToken}");
+            //Debug.Log ($"Kong -> userID: {userid}, userName: {username}, authToken: {auth}");
+
+            // Make sure game is loaded, since load on startup usually happens before the API call is complete
+            if (loadGameOnAPILoaded)
+                GS_Events.Invoke (EventID.LoadGame, null);
 	    }
 		
 	}

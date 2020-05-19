@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0bba6e0d83b644fa184d6d437368aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadOnStart: 1
+  loadOnStart: 0
 --- !u!1 &643991306812420557
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49988e4bd85d95044a87be1372f6068a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadGameOnAPILoaded: 1
 --- !u!1 &8648630893602168369
 GameObject:
   m_ObjectHideFlags: 0
