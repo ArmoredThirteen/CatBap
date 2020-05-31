@@ -36,29 +36,30 @@ namespace ATE.Points
 
         public void AddPoints(object[] args)
         {
-            instance.Points += (int)args[0];
+            Points += (int)args[0];
             InvokePointsChanged ();
         }
 
         public void RemovePoints(object[] args)
         {
-            instance.Points -= (int)args[0];
+            Points -= (int)args[0];
             InvokePointsChanged ();
         }
 
         public void SetPoints(object[] args)
         {
-            instance.Points = (int)args[0];
+            Points = (int)args[0];
             InvokePointsChanged ();
         }
+
 
         // For other systems to receive info about new points value.
         // If they were to respond to Add or SetPoints instead they could trigger
         //   before this class triggers, and report an out of sync value.
-        public void InvokePointsChanged()
+        private void InvokePointsChanged()
         {
-            Debug.Log ("New points: " + instance.Points);
-            GS_Events.Invoke (EventID.PointsChanged, instance.Points);
+            //Debug.Log ("New points: " + Points);
+            GS_Events.Invoke (EventID.PointsChanged, Points);
         }
 
     }

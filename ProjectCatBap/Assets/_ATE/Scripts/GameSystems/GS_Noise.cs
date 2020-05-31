@@ -9,17 +9,20 @@ namespace ATE.Noise
 	public class GS_Noise : GameSystem
 	{
         [HideInInspector]
-        public GS_Noise instance = null;
-
-        //TODO: Not public
-        public float currNoise = 0;
+        public static GS_Noise instance = null;
 
         public float noiseDecay = 1;
-
         public List<float> noiseLevels = new List<float> ();
+        
+        public float Noise
+        {
+            private set; get;
+        }
 
-
-        private int currNoiseLevel = 0;
+        public int NoiseLevel
+        {
+            private set; get;
+        }
 
 
         private void Awake()
@@ -35,53 +38,67 @@ namespace ATE.Noise
         {
             GS_Events.AddListener (EventID.AddNoise, AddNoise);
             GS_Events.AddListener (EventID.RemoveNoise, RemoveNoise);
-            //GS_Events.AddListener (EventID.NoiseLevelIncrease, LogNoiseLevelIncrease);
-            //GS_Events.AddListener (EventID.NoiseLevelDecrease, LogNoiseLevelDecrease);
+
+            Noise = 0;
+            NoiseLevel = 0;
         }
 
         private void Update()
         {
-            GS_Events.Invoke (EventID.RemoveNoise, noiseDecay * Time.deltaTime);
+            RemoveNoise (noiseDecay * Time.deltaTime);
         }
 
 
-        public void AddNoise(object[] args)
+        public void AddNoise(params object[] args)
         {
-            // Add noise and reset decay delay
-            currNoise += (float)args[0];
+            // Add noise
+            Noise += (float)args[0];
+            InvokeNoiseChanged ();
 
             // Increase noise level
-            if (noiseLevels.Count == 0 || currNoiseLevel >= noiseLevels.Count)
+            if (noiseLevels.Count == 0 || NoiseLevel >= noiseLevels.Count)
                 return;
-            if (currNoise < noiseLevels[currNoiseLevel])
+            if (Noise < noiseLevels[NoiseLevel])
                 return;
 
-            currNoiseLevel++;
-            GS_Events.Invoke (EventID.NoiseLevelIncrease, currNoiseLevel, currNoise);
+            NoiseLevel++;
+            InvokeNoiseLevelChanged ();
         }
 
-        public void RemoveNoise(object[] args)
+        public void RemoveNoise(params object[] args)
         {
+            if (Noise <= 0)
+                return;
+
             // Remove noise
-            currNoise = Mathf.Max (0, currNoise - (float)args[0]);
+            Noise = Mathf.Max (0, Noise - (float)args[0]);
+            InvokeNoiseChanged ();
 
-            if (noiseLevels.Count == 0 || currNoiseLevel <= 0)
+            // Decrease noise level
+            if (noiseLevels.Count == 0 || NoiseLevel <= 0)
                 return;
-            if (currNoise >= noiseLevels[currNoiseLevel - 1])
+            if (Noise >= noiseLevels[NoiseLevel - 1])
                 return;
 
-            currNoiseLevel--;
-            GS_Events.Invoke (EventID.NoiseLevelDecrease, currNoiseLevel, currNoise);
+            NoiseLevel--;
+            InvokeNoiseLevelChanged ();
         }
 
-        public void LogNoiseLevelIncrease(object[] args)
+
+        // For other systems to receive info about new noise value.
+        // If they were to respond to Add or RemovePoints instead they could trigger
+        //   before this class triggers, and report an out of sync value.
+        private void InvokeNoiseChanged()
         {
-            Debug.Log ("Noise level INcreased: " + args[0] + ", current noise is: " + args[1]);
+            //Debug.Log ("New noise: " + Noise);
+            GS_Events.Invoke (EventID.NoiseChanged, Noise);
         }
 
-        public void LogNoiseLevelDecrease(object[] args)
+        // For other systems to receive info about new noise levels.
+        private void InvokeNoiseLevelChanged()
         {
-            Debug.Log ("Noise level DEcreased: " + args[0] + ", current noise is: " + args[1]);
+            //Debug.Log ("New noise level: " + NoiseLevel);
+            GS_Events.Invoke (EventID.NoiseLevelChanged, NoiseLevel);
         }
 
     }

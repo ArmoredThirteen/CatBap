@@ -17,6 +17,7 @@ namespace ATE.Feedback
             PointsChanged (GS_Points.instance.Points);
         }
 
+
         private void PointsChanged(params object[] args)
         {
             pointsNumber.text = ((int)args[0]).ToString ();
