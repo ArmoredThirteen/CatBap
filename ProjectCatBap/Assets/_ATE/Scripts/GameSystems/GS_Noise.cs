@@ -11,8 +11,10 @@ namespace ATE.Noise
         [HideInInspector]
         public static GS_Noise instance = null;
 
+        public bool loseLevelOnMaxNoise = true;
         public float noiseDecay = 1;
         public List<float> noiseLevels = new List<float> ();
+
         
         public float Noise
         {
@@ -22,6 +24,14 @@ namespace ATE.Noise
         public int NoiseLevel
         {
             private set; get;
+        }
+
+        public bool IsMaxNoiseLevel
+        {
+            get
+            {
+                return NoiseLevel >= noiseLevels.Count;
+            }
         }
 
 
@@ -56,7 +66,7 @@ namespace ATE.Noise
             InvokeNoiseChanged ();
 
             // Increase noise level
-            if (noiseLevels.Count == 0 || NoiseLevel >= noiseLevels.Count)
+            if (noiseLevels.Count == 0 || IsMaxNoiseLevel)
                 return;
             if (Noise < noiseLevels[NoiseLevel])
                 return;
@@ -99,6 +109,9 @@ namespace ATE.Noise
         {
             //Debug.Log ("New noise level: " + NoiseLevel);
             GS_Events.Invoke (EventID.NoiseLevelChanged, NoiseLevel);
+
+            if (loseLevelOnMaxNoise && IsMaxNoiseLevel)
+                GS_Events.Invoke (EventID.LoseLevel, LevelEnding.LossReasons.MaxNoise);
         }
 
     }
