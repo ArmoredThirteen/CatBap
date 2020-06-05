@@ -6,7 +6,7 @@ namespace ATE.LevelEnding
 {
 	public enum WinReasons
 	{
-		WinZone,
+		Zone,
 		
 	}
 }

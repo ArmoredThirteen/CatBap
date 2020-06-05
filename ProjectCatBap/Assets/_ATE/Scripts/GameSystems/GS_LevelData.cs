@@ -32,17 +32,28 @@ namespace ATE.Levels
         }
 
 
-        public Level GetLevel(string levelName)
+        public static Level GetActiveLevel()
         {
-            return Array.Find (levels, lvl => String.Equals (lvl, levelName));
+            return GetLevel (UnityEngine.SceneManagement.SceneManager.GetActiveScene ().name);
+        }
+
+        public static Level GetLevel(string levelName)
+        {
+            return Array.Find (instance.levels, lvl => String.Equals (lvl.sceneName, levelName));
+        }
+
+
+        public static Level GetNextLevel(Level theLevel)
+        {
+            return GetNextLevel (theLevel.sceneName);
         }
 
         // Return the level after the one found at levelName
-        public Level GetNextLevel(string levelName)
+        public static Level GetNextLevel(string levelName)
         {
-            for (int i = 0; i < levels.Length - 1; i++)
-                if (String.Equals (levels[i].sceneName, levelName))
-                    return levels[i + 1];
+            for (int i = 0; i < instance.levels.Length - 1; i++)
+                if (String.Equals (instance.levels[i].sceneName, levelName))
+                    return instance.levels[i + 1];
 
             return null;
         }

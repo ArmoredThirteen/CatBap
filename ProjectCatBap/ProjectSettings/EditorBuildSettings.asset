@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/_ATE/Scenes/Menus/Credits.unity
     guid: f8978f16f3a4fb54aa7f306f93d5cf82
   - enabled: 1
+    path: Assets/_ATE/Scenes/Menus/Level Won.unity
+    guid: 4437c02c576f5724eab8d20475b59992
+  - enabled: 1
+    path: Assets/_ATE/Scenes/Menus/Level Lost.unity
+    guid: ccb1c8e712155fb438bda8cfa58dddd0
+  - enabled: 1
     path: Assets/_ATE/Scenes/Levels/Tutorial.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1

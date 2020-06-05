@@ -24,6 +24,7 @@
         // Noise system
         AddNoise,
         RemoveNoise,
+        SetNoise,
         NoiseChanged,
         NoiseLevelChanged,
     }

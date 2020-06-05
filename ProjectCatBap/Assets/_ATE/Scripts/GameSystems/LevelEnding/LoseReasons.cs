@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace ATE.LevelEnding
 {
-	public enum LossReasons
+	public enum LoseReasons
 	{
-		LoseZone,
+		Zone,
         MaxNoise,
 		
 	}
