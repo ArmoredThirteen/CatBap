@@ -9,7 +9,7 @@ namespace ATE.Baps.Zones
 	{
         protected override void OnTriggered(Bappee bappee)
         {
-            GS_Events.Invoke (EventID.LoseLevel);
+            GS_Events.Invoke (EventID.LoseLevel, LevelEnding.LossReasons.LoseZone);
         }
 
     }
