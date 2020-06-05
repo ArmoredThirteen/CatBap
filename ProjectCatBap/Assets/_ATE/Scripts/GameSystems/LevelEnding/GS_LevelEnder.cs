@@ -1,8 +1,10 @@
 ﻿using ATE.Events;
 using ATE.GameSystems;
+using ATE.Levels;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ATE.Levels.GS_LevelData;
 
 namespace ATE.LevelEnding
 {
@@ -10,6 +12,22 @@ namespace ATE.LevelEnding
 	{
 		[HideInInspector]
         public static GS_LevelEnder instance = null;
+
+        //TODO: Seems a bit hacky but currently best spot to store level for win/loss scenes
+        public Level LastEndedLevel
+        {
+            private set; get;
+        }
+
+        public WinReasons LastWinReason
+        {
+            private set; get;
+        }
+
+        public LoseReasons LastLoseReason
+        {
+            private set; get;
+        }
 
 
         private void Awake()
@@ -30,43 +48,49 @@ namespace ATE.LevelEnding
 
         private void WinLevel(object[] args)
         {
-            WinReasons reason = (WinReasons)args[0];
+            LastWinReason = (WinReasons)args[0];
+            LastEndedLevel = GS_LevelData.GetActiveLevel ();
 
-            switch (reason)
+            switch (LastWinReason)
             {
-                case WinReasons.WinZone:
-                    WinLevel ();
+                case WinReasons.Zone:
+                    Win_Zone ();
                     break;
             }
         }
 
         private void LoseLevel(object[] args)
         {
-            LossReasons reason = (LossReasons)args[0];
+            LastLoseReason = (LoseReasons)args[0];
+            LastEndedLevel = GS_LevelData.GetActiveLevel ();
 
-            switch (reason)
+            switch (LastLoseReason)
             {
-                case LossReasons.LoseZone:
-                    LoadLevelSelect ();
+                case LoseReasons.Zone:
+                    Lose_Zone ();
                     break;
-                case LossReasons.MaxNoise:
-                    LoadLevelSelect ();
+                case LoseReasons.MaxNoise:
+                    Lose_MaxNoise ();
                     break;
             }
         }
 
 
-        private void WinLevel()
+        private void Win_Zone()
         {
-            //TODO: Store the next level and go to 'continue to next level screen'
             //TODO: Store highscore, unlock next level, save game, reset current points and noise
-            GS_Events.Invoke (EventID.LoadLevel, "Level Select");
+            GS_Events.Invoke (EventID.LoadLevel, "Level Won");
         }
 
-        private void LoadLevelSelect()
+
+        private void Lose_Zone()
         {
-            //TODO: Go to 'retry level' screen
-            GS_Events.Invoke (EventID.LoadLevel, "Level Select");
+            GS_Events.Invoke (EventID.LoadLevel, "Level Lost");
+        }
+
+        private void Lose_MaxNoise()
+        {
+            GS_Events.Invoke (EventID.LoadLevel, "Level Lost");
         }
 
     }

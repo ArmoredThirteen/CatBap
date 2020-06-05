@@ -40,9 +40,12 @@ namespace ATE.Baps
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            BapZone zone = collision.GetComponent<BapZone> ();
-            if (zone != null)
-                zone.ProcessBappee (this);
+            BapZone[] zones = collision.GetComponents<BapZone> ();
+            if (zones == null)
+                return;
+
+            for (int i = 0; i < zones.Length; i++)
+                zones[i].ProcessBappee (this);
         }
 
         // Removes the bappee, could be straight deletion or (in the future) things like adding to pool
