@@ -35,6 +35,7 @@ namespace ATE.LevelEnding
             switch (reason)
             {
                 case WinReasons.WinZone:
+                    WinLevel ();
                     break;
             }
         }
@@ -46,10 +47,26 @@ namespace ATE.LevelEnding
             switch (reason)
             {
                 case LossReasons.LoseZone:
+                    LoadLevelSelect ();
                     break;
                 case LossReasons.MaxNoise:
+                    LoadLevelSelect ();
                     break;
             }
+        }
+
+
+        private void WinLevel()
+        {
+            //TODO: Store the next level and go to 'continue to next level screen'
+            //TODO: Store highscore, unlock next level, save game, reset current points and noise
+            GS_Events.Invoke (EventID.LoadLevel, "Level Select");
+        }
+
+        private void LoadLevelSelect()
+        {
+            //TODO: Go to 'retry level' screen
+            GS_Events.Invoke (EventID.LoadLevel, "Level Select");
         }
 
     }
