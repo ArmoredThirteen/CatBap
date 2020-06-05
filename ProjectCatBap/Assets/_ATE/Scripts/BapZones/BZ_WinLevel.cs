@@ -9,7 +9,7 @@ namespace ATE.Baps.Zones
 	{
         protected override void OnTriggered(Bappee bappee)
         {
-            GS_Events.Invoke (EventID.WinLevel, LevelEnding.WinReasons.WinZone);
+            GS_Events.Invoke (EventID.WinLevel, LevelEnding.WinReasons.Zone);
         }
 
     }

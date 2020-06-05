@@ -48,6 +48,7 @@ namespace ATE.Noise
         {
             GS_Events.AddListener (EventID.AddNoise, AddNoise);
             GS_Events.AddListener (EventID.RemoveNoise, RemoveNoise);
+            GS_Events.AddListener (EventID.SetNoise, SetNoise);
 
             Noise = 0;
             NoiseLevel = 0;
@@ -94,6 +95,16 @@ namespace ATE.Noise
             InvokeNoiseLevelChanged ();
         }
 
+        public void SetNoise(params object[] args)
+        {
+            float newNoise = (float)args[0];
+
+            if (newNoise > Noise)
+                AddNoise (newNoise - Noise);
+            else if (newNoise < Noise)
+                RemoveNoise (Noise - newNoise);
+        }
+
 
         // For other systems to receive info about new noise value.
         // If they were to respond to Add or RemovePoints instead they could trigger
@@ -111,7 +122,7 @@ namespace ATE.Noise
             GS_Events.Invoke (EventID.NoiseLevelChanged, NoiseLevel);
 
             if (loseLevelOnMaxNoise && IsMaxNoiseLevel)
-                GS_Events.Invoke (EventID.LoseLevel, LevelEnding.LossReasons.MaxNoise);
+                GS_Events.Invoke (EventID.LoseLevel, LevelEnding.LoseReasons.MaxNoise);
         }
 
     }

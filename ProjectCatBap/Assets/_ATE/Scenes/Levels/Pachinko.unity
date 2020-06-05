@@ -6074,7 +6074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f5b670f381b494e9fd9485bd1b06bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noise: 15
+  noise: 0
   minTrackedNoise: 0.1
   points: 5
 --- !u!1 &1999004438
